@@ -31,9 +31,7 @@ export function nowSeconds(): number {
  * - X-Wallet-Timestamp
  * - X-Wallet-Nonce
  */
-export async function buildAuthHeaders(
-  signer: DocsSigner,
-): Promise<Record<string, string>> {
+export async function buildAuthHeaders(signer: DocsSigner): Promise<Record<string, string>> {
   const timestamp = nowSeconds()
   const nonce = generateNonce()
   const message = buildMessage(timestamp, nonce)

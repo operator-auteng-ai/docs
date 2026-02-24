@@ -57,14 +57,17 @@ describe("share", () => {
   })
 
   it("throws DocsApiError on 404", async () => {
-    fetchSpy.mockResolvedValue(new Response(JSON.stringify({ error: "not found" }), { status: 404, statusText: "Not Found" }))
+    fetchSpy.mockResolvedValue(
+      new Response(JSON.stringify({ error: "not found" }), { status: 404, statusText: "Not Found" })
+    )
 
-    await expect(share({ signer: mockSigner(), path: "nope.md", baseUrl: BASE_URL }))
-      .rejects.toThrow(DocsApiError)
+    await expect(share({ signer: mockSigner(), path: "nope.md", baseUrl: BASE_URL })).rejects.toThrow(DocsApiError)
   })
 
   it("throws DocsApiError on 429 rate limit", async () => {
-    fetchSpy.mockResolvedValue(new Response(JSON.stringify({ error: "rate limit" }), { status: 429, statusText: "Too Many Requests" }))
+    fetchSpy.mockResolvedValue(
+      new Response(JSON.stringify({ error: "rate limit" }), { status: 429, statusText: "Too Many Requests" })
+    )
 
     const err = await share({ signer: mockSigner(), path: "report.md", baseUrl: BASE_URL }).catch((e) => e)
     expect(err).toBeInstanceOf(DocsApiError)
@@ -119,7 +122,6 @@ describe("listRecent", () => {
   it("throws DocsApiError on 500", async () => {
     fetchSpy.mockResolvedValue(new Response("error", { status: 500, statusText: "Internal Server Error" }))
 
-    await expect(listRecent({ baseUrl: BASE_URL }))
-      .rejects.toThrow(DocsApiError)
+    await expect(listRecent({ baseUrl: BASE_URL })).rejects.toThrow(DocsApiError)
   })
 })

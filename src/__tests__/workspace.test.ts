@@ -24,7 +24,13 @@ describe("create", () => {
   })
 
   it("sends POST to /api/docs with correct body", async () => {
-    const doc = { path: "report.md", title: "report", version: 1, created_at: "2026-01-01T00:00:00Z", updated_at: "2026-01-01T00:00:00Z" }
+    const doc = {
+      path: "report.md",
+      title: "report",
+      version: 1,
+      created_at: "2026-01-01T00:00:00Z",
+      updated_at: "2026-01-01T00:00:00Z",
+    }
     fetchSpy.mockResolvedValue(new Response(JSON.stringify(doc), { status: 201 }))
 
     const result = await create({ signer: mockSigner(), path: "report.md", content: "# Hello", baseUrl: BASE_URL })
@@ -70,10 +76,13 @@ describe("create", () => {
   })
 
   it("throws DocsApiError on 409 conflict", async () => {
-    fetchSpy.mockResolvedValue(new Response(JSON.stringify({ error: "exists" }), { status: 409, statusText: "Conflict" }))
+    fetchSpy.mockResolvedValue(
+      new Response(JSON.stringify({ error: "exists" }), { status: 409, statusText: "Conflict" })
+    )
 
-    await expect(create({ signer: mockSigner(), path: "report.md", content: "# Hello", baseUrl: BASE_URL }))
-      .rejects.toThrow(DocsApiError)
+    await expect(
+      create({ signer: mockSigner(), path: "report.md", content: "# Hello", baseUrl: BASE_URL })
+    ).rejects.toThrow(DocsApiError)
   })
 })
 
@@ -89,7 +98,13 @@ describe("update", () => {
   })
 
   it("sends PUT to /api/docs", async () => {
-    const doc = { path: "report.md", title: "report", version: 2, created_at: "2026-01-01T00:00:00Z", updated_at: "2026-01-01T00:00:00Z" }
+    const doc = {
+      path: "report.md",
+      title: "report",
+      version: 2,
+      created_at: "2026-01-01T00:00:00Z",
+      updated_at: "2026-01-01T00:00:00Z",
+    }
     fetchSpy.mockResolvedValue(new Response(JSON.stringify(doc), { status: 200 }))
 
     const result = await update({ signer: mockSigner(), path: "report.md", content: "# Updated", baseUrl: BASE_URL })
@@ -101,10 +116,13 @@ describe("update", () => {
   })
 
   it("throws DocsApiError on 404", async () => {
-    fetchSpy.mockResolvedValue(new Response(JSON.stringify({ error: "not found" }), { status: 404, statusText: "Not Found" }))
+    fetchSpy.mockResolvedValue(
+      new Response(JSON.stringify({ error: "not found" }), { status: 404, statusText: "Not Found" })
+    )
 
-    await expect(update({ signer: mockSigner(), path: "nope.md", content: "x", baseUrl: BASE_URL }))
-      .rejects.toThrow(DocsApiError)
+    await expect(update({ signer: mockSigner(), path: "nope.md", content: "x", baseUrl: BASE_URL })).rejects.toThrow(
+      DocsApiError
+    )
   })
 })
 
@@ -174,9 +192,10 @@ describe("remove", () => {
   })
 
   it("throws DocsApiError on 404", async () => {
-    fetchSpy.mockResolvedValue(new Response(JSON.stringify({ error: "not found" }), { status: 404, statusText: "Not Found" }))
+    fetchSpy.mockResolvedValue(
+      new Response(JSON.stringify({ error: "not found" }), { status: 404, statusText: "Not Found" })
+    )
 
-    await expect(remove({ signer: mockSigner(), path: "nope.md", baseUrl: BASE_URL }))
-      .rejects.toThrow(DocsApiError)
+    await expect(remove({ signer: mockSigner(), path: "nope.md", baseUrl: BASE_URL })).rejects.toThrow(DocsApiError)
   })
 })

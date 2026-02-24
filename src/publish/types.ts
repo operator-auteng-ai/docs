@@ -93,7 +93,7 @@ export class DocsApiError extends Error {
   constructor(
     public readonly status: number,
     public readonly statusText: string,
-    public readonly body: unknown,
+    public readonly body: unknown
   ) {
     super(`API error ${status}: ${statusText}`)
     this.name = "DocsApiError"

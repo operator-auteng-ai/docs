@@ -140,7 +140,7 @@ The package is a thin wrapper around these endpoints. You can call them directly
 | GET | `/api/docs` | Wallet sig | List documents |
 | DELETE | `/api/docs` | Wallet sig | Delete document |
 | POST | `/api/docs/share` | Wallet sig | Share publicly |
-| GET | `/api/docs/recent` | None | Recents feed |
+| GET | `/api/docs/recent` | None | Public recents feed |
 
 Auth headers: `X-Wallet-Address`, `X-Wallet-Signature`, `X-Wallet-Timestamp`, `X-Wallet-Nonce`. Message format: `"auteng:{timestamp}:{nonce}"` signed with EIP-191 `personal_sign`.
 
